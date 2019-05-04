@@ -1,0 +1,54 @@
+﻿@model  List<Employee>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Employees";
+}
+<div class="container">
+    <h1>Employee</h1>
+    @Html.ActionLink("Add new Employee", "AddEdit", "Employee", null, new { @class = "btn btn-primary" })
+   
+
+</div>
+<table class="table table-hover table-striped">
+    <thead>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Salary</th>
+    <th>Gender</th>
+    <th>DepartmentID</th>
+    <th>Action</th>
+    </thead>
+    <tbody>
+        @foreach (Employee emp in Model)
+        {
+            <tr>
+                <td>@emp.id</td>
+                <td>@emp.Name</td>
+                <td>@emp.Salary</td>
+                <td>@emp.Gender</td>
+                <td>@emp.fk_DepartmentId</td>
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", emp.id, new { @class = "btn btn-success" })*@
+                    @Html.ActionLink("Edit", "AddEdit", "Employee", new { id = emp.id }, new { @class = "btn btn-success" })
+
+                    <input type="button" value="delete" class="btn btn-danger" onclick="confirmDelete(@emp.id)"
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        function confirmDelete(id) {
+            let result = confirm("Are you sure you want to delete !");
+            if (result) {
+                location.href = "/Employee/delete/" + id
+            }
+        }
+
+     
+
+    </script>
+} 
